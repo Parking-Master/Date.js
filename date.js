@@ -95,3 +95,23 @@ date.js.constructor = function() {
   var ampm = hours >= 12 ? 'PM' : 'AM';
   return ampm || undefined;
 }
+date.js.week = () => {
+  var mt = (new Date()).getMonth().toString().split('')[0].length != 2 ? '0' + (new Date()).getMonth().toString() : (new Date()).getMonth().toString();
+  var dt = (new Date()).getDate().toString().split('').length != 2 ? '0' + (new Date()).getDate().toString() : (new Date()).getDate().toString();
+  var s = (new Date()).getFullYear().toString() + '-' + mt + '-' + dt;
+  const [y, m, d] = s.split('-');
+  const date = new Date(y, m - 1, d);
+  date.setDate(d - ((date.getDay() + 6) % 7));
+  return Math.ceil(date.getDate() / 7).toFixed(0).toString();
+}
+date.js.tlmonth = function() {
+  return (this.month()).substr(0, 3).toString();
+};
+date.js.day = function() {
+  const locale = navigator.language;
+  var mt = (new Date()).getMonth().toString().split('')[0].length != 2 ? '0' + (new Date()).getMonth().toString() : (new Date()).getMonth().toString();
+  var dt = (new Date()).getDate().toString().split('').length != 2 ? '0' + (new Date()).getDate().toString() : (new Date()).getDate().toString();
+  var dateStr = mt + '/' + dt + '/' + (new Date()).getFullYear().toString();
+  var date = new Date(dateStr);
+  return date.toLocaleDateString(locale, { weekday: 'long' });        
+};
